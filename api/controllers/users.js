@@ -1,56 +1,48 @@
 import { db } from "../db.js";
 
-// Função para extrair os valores do body
-const getUserValues = (body) => [
-    body.nome,
-    body.email,
-    body.fone,
-    body.data_nascimento
-];
+export const getUsers = (_, res) => {
+    const qUsers = "SELECT * FROM usuarios";
 
-// Função para executar a query no banco de dados
-const executeQuery = (query, params, res, successMessage) => {
-    db.query(query, params, (err, data) => {
-        if (err) return res.json(err);
+    db.query(qUsers, (err, data) => {
+        if (err) return res.json (err);
 
-        const response = {
-            data: data,
-            message: successMessage // Aqui está o uso correto da variável successMessage
-        };
-
-        return res.status(200).json(response);
+        return res.status(200).json(data)
     });
 };
 
-// Função para buscar os usuários
-export const getUsers = (_, res) => {
-    const qUsers = "SELECT * FROM usuarios";
-    const successMessage = "Conectado com sucesso"; // Defina o successMessage
+export const addUsers = (req, res) => {
+    const qAdd =
+        "INSERT INTO usuarios(`nome`, `email`, `fone`, `data_nascimento`) VALUES (?)";
 
-    executeQuery(qUsers, [], res, successMessage); // Passe o successMessage para a função
+    const values = [
+        req.body.nome,
+        red.body.email,
+        red.body.fone,
+        red.body.data_nascimento,
+    ];
+
+    db.query(qAdd, [values], (err) => {
+        if (err) return res.json(err);
+
+        return res.status(200).json("Usuário criado com sucesso.");
+    });
 };
 
-export const addUser = (req, res) => {
-    const qAdd = "INSERT INTO usuarios(`nome`, `email`, `fone`, `data_nascimento`) VALUES (?)";
-    const values = getUserValues(req.body);
-    const successMessage = "Usuário criado com sucesso"; // Defina o successMessage
-
-    executeQuery(qAdd, [values], res, successMessage); // Passe o successMessage para a função
-};
-
-// Função para atualizar um usuário
 export const updateUser = (req, res) => {
-    const qUpdate = "UPDATE usuarios SET `nome` = ?, `email` = ?, `fone` = ?, `data_nascimento` = ? WHERE `id` = ?";
-    const values = getUserValues(req.body);
-    const successMessage = "Usuário atualizado com sucesso"; // Defina o successMessage
+    const qUpdate =
+        "UPDATE usuarios SET `nome` = ?, `email` = `?`, `fone` = ?, `data_nascimento` = ? WHERE `id` = ?"
 
-    executeQuery(qUpdate, [...values, req.params.id], res, successMessage); // Passe o successMessage para a função
-};
+    const values = [
+        req.body.nome,
+        red.body.email,
+        red.body.fone,
+        red.body.data_nascimento,
+    ]
 
-// Função para deletar um usuário
-export const deleteUser = (req, res) => {
-    const qDelete = "DELETE FROM usuarios WHERE `id` = ?";
-    const successMessage = "Usuário deletado com sucesso"; // Defina o successMessage
+    db.query(qUpdate, [...values, req.params.id], (err) => {
+        if (err) return res.json(err);
 
-    executeQuery(qDelete, [req.params.id], res, successMessage); // Passe o successMessage para a função
-};
+        return res.status(200).json("Usuário criado com sucesso.");
+    });
+    
+}

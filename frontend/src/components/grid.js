@@ -27,8 +27,7 @@ const Grid = ( {users, userSets, setOndEdit} ) => {
                 </Tr>
             </Thead>
             <Tbody>
-                {users && users.length > 0 ? (
-                  users.map((item, i) => (
+                {users.map((item, i) => (
                     <Tr key={i}>
                         <Td width="30%">{item.nome}</Td>
                         <Td width="30%">{item.email}</Td>
@@ -36,12 +35,7 @@ const Grid = ( {users, userSets, setOndEdit} ) => {
                         <Td alignCenter width="5%"><FaEdit onClick={() => onEditHandler(item)}/></Td>
                         <Td alignCenter width="5%"><FaTrash onClick={() => onDeleteHandler(item.id)}/></Td>
                     </Tr>
-                    ))
-                ) : (
-                    <tr>
-                        <td colSpan="5">Nenhum usuário encontrado.</td>
-                    </tr>
-                )}
+                ))}
             </Tbody>
         </Table>
     );
