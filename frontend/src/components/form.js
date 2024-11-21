@@ -8,24 +8,25 @@ const Form = ({ onEdit }) => {
         <FormContainer ref={ref}>
             <InputArea>
                 <Label>Nome</Label>
-                <Input name="nome"/>
+                <Input name="nome" />
             </InputArea>
             <InputArea>
                 <Label>Email</Label>
-                <Input name="nome" type='email'/>
+                <Input name="email" type="email" />
             </InputArea>
             <InputArea>
                 <Label>Telefone</Label>
-                <Input name="nome"/>
+                <Input name="fone" />
             </InputArea>
             <InputArea>
                 <Label>Data de nascimento</Label>
-                <Input name="nome" type="date"/>
+                <Input name="data_nascimento" type="date" />
             </InputArea>
 
             <Button type="submit">Salvar</Button>
         </FormContainer>
     );
 }
+
 
 export default Form;

@@ -1,20 +1,10 @@
-import React, { useState } from "react"
-import { handleDelete, handleEdit } from "./handles.js";
-import { Table, Thead, Tr, Th, Tbody, Td } from "../styles/stylesForComponents/grid.js"
+import React from "react"
+import axios from "axios";
+import { Table, Thead, Tr, Th, Tbody, Td } from "../styles/stylesForComponents/grid"
 import { FaTrash, FaEdit} from "react-icons/fa";
+import { toast } from "react-toastify";
 
-const Grid = ( {users, userSets, setOndEdit} ) => {
-
-    const [onEdit, setOnEditState] = useState(null);
-    
-    const onEditHandler = (item) => {
-        handleEdit(item, setOnEditState)
-    };
-
-    const onDeleteHandler = async (id) => {
-        await handleDelete(id, users, userSets, setOnEditState)
-    };
-
+const Grid = ( {users} ) => {
     return (
         <Table>
             <Thead>
@@ -32,8 +22,8 @@ const Grid = ( {users, userSets, setOndEdit} ) => {
                         <Td width="30%">{item.nome}</Td>
                         <Td width="30%">{item.email}</Td>
                         <Td onlyWeb width="20%">{item.fone}</Td>
-                        <Td alignCenter width="5%"><FaEdit onClick={() => onEditHandler(item)}/></Td>
-                        <Td alignCenter width="5%"><FaTrash onClick={() => onDeleteHandler(item.id)}/></Td>
+                        <Td width="5%"><FaEdit/></Td>
+                        <Td width="5%"><FaTrash/></Td>
                     </Tr>
                 ))}
             </Tbody>
