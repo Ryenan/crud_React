@@ -58,7 +58,6 @@ export const updateUser = (req, res) => {
     executeQuery(qUpdate, [...values, req.params.id], res, successMessage);
 };
 
-// Função para deletar um usuário
 export const deleteUser = (req, res) => {
     const qDelete = "DELETE FROM usuarios WHERE `id` = ?";
     const successMessage = "Usuário deletado com sucesso"; 
