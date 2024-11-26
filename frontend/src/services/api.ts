@@ -14,7 +14,7 @@ export const getUsers = async () => {
     }
 }
 
-export const addUser = async (userData: { nome: string, email: string, fone: number, data_nascimento: string }) => {
+export const addUser = async (userData: { nome: string, email: string, fone: string, data_nascimento: string }) => {
     try {
         const response = await api.post("/", userData);
         return response.data;
@@ -24,7 +24,7 @@ export const addUser = async (userData: { nome: string, email: string, fone: num
     }
 };
 
-export const updateUser = async (id: number, userData: { nome: string, email: string, fone: number, data_nascimento: string }) => {
+export const updateUser = async (id: number, userData: { nome: string, email: string, fone: string, data_nascimento: string }) => {
     try {
         const response = await api.put(`/${id}`, userData);
         return response.data;

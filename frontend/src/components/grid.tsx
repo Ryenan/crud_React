@@ -2,6 +2,7 @@ import React from "react";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import { deleteUser } from "../services/api";
 import { User } from "../models/types";
+import styles from '../../src/styles/forms.module.css'; 
 
 interface GridProps {
     users: User[];
@@ -21,7 +22,7 @@ const Grid: React.FC<GridProps> = ({ users, setUsers, setOnEdit }) => {
     };
 
     return (
-        <table>
+        <table className={styles.table}>
             <thead>
                 <tr>
                     <th>Nome</th>
