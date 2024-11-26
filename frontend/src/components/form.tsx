@@ -3,6 +3,7 @@ import { User } from '../models/types';
 import { addUser, updateUser } from '../services/api';
 import { loadUsers } from './userFunctions/userUtils';
 import styles from '../../src/styles/forms.module.css'; 
+import InputMask from 'react-input-mask';
 
 interface FormProps {
     onEdit: User | null;
@@ -16,7 +17,7 @@ const Form: React.FC<FormProps> = ({ onEdit, setOnEdit, setUsers, users }) => {
         id: 0,
         nome: '',
         email: '',
-        fone: 0,
+        fone: '',
         data_nascimento: '',
     });
 
@@ -50,7 +51,7 @@ const Form: React.FC<FormProps> = ({ onEdit, setOnEdit, setUsers, users }) => {
             }
     
             setOnEdit(null);
-            setFormData({ id: 0, nome: '', email: '', fone  : 0, data_nascimento: '' });
+            setFormData({ id: 0, nome: '', email: '', fone  : '', data_nascimento: '' });
         } catch (error) {
             console.error('Erro ao salvar usuário:', error);
         }
@@ -68,56 +69,75 @@ const Form: React.FC<FormProps> = ({ onEdit, setOnEdit, setUsers, users }) => {
 
     const handleClear = () => {
         setOnEdit(null); 
-        setFormData({ id: 0, nome: '', email: '', fone: 0, data_nascimento: '' }); 
+        setFormData({ id: 0, nome: '', email: '', fone: '', data_nascimento: '' }); 
+    };
+
+    const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value.replace(/\D/g, '');
+        const formattedValue = value.replace(
+          /(\d{2})(\d{5})(\d{4})/,
+            '($1) $2-$3'
+        );
+        
+        setFormData(prev => ({
+            ...prev,
+            fone: formattedValue
+        }));
     };
 
     return (
     
     <div> 
-        <form className={styles.collumn} onSubmit={handleSubmit}>
-            <div className={styles.collumnRow}>
-                <input 
-                    className={styles.input}
-                    type="text"
-                    name="nome"
-                    value={formData.nome}
-                    onChange={handleChange}
-                    placeholder="Nome"
-                    required
-                    />
-                <input  
-                    className={styles.input}
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Email"
-                    required
-                    />
-                <input  
-                    className={styles.input}
-                    type="number"
-                    name="fone"
-                    value={formData.fone}
-                    onChange={handleChange}
-                    placeholder="Telefone"
-                    required
-                    />
-                <input
-                    className={styles.input}
-                    type="date"
-                    name="data_nascimento"
-                    value={formData.data_nascimento}
-                    onChange={handleChange}
-                    placeholder="Data de Nascimento"
-                    required
-                    />
+        <form className={styles.collumnRow} onSubmit={handleSubmit}>
+            <div className={styles.collumnInputs}>
+                <div className={styles.collumn}>
+                    <input 
+                        className={styles.input}
+                        type="text"
+                        name="nome"
+                        value={formData.nome}
+                        onChange={handleChange}
+                        placeholder="Nome"
+                        required
+                        />
+                    <InputMask  
+                        className={styles.input}
+                        type="text"
+                        name="fone"
+                        mask="(99) 99999-9999"
+                        data-mask-selectonfocus="true"
+                        value={formData.fone}
+                        onChange={handlePhoneChange}
+                        placeholder="Telefone"
+                        required
+                        />
+                </div>
+                <div className={styles.collumn}>
+                    <input  
+                        className={styles.input}
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="Email"
+                        required
+                        />
+                    <input
+                        className={styles.input}
+                        type="date"
+                        name="data_nascimento"
+                        value={formData.data_nascimento}
+                        onChange={handleChange}
+                        placeholder="Data de Nascimento"
+                        required
+                        />
+                </div>
             </div>
-            <div className={styles.collumnRow}>    
-                <button type="submit">
+            <div className={styles.collumnButtons}>    
+                <button className={styles.button} type="submit">
                     {formData.id ? 'Atualizar Usuário' : 'Adicionar Usuário'}
-                </button>
-                <button type="button" onClick={handleClear}>
+                </button >
+                <button className={styles.button} type="button" onClick={handleClear}>
                     Limpar
                 </button>
             </div>

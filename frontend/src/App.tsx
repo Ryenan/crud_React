@@ -36,6 +36,7 @@ const App: React.FC = () => {
                             value={search}
                             onChange={e => setSearch(e.target.value)}
                             />
+                        <img className={styles.imageIcoInput} src="https://endlessicons.com/wp-content/uploads/2015/08/search-icon-2-614x460.png" alt="" />
                 </div>
                 <ul>
                     {filteredUsers.map(user => (
